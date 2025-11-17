@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For You</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- PARTICLE BACKGROUND -->
+<canvas id="particleCanvas"></canvas>
+
+<!-- Background music (auto on first click) -->
+<audio id="bgAudio" src="soft-music.mp3" loop preload="auto"></audio>
+
+<!-- Loader Screen -->
+<div id="loader" class="loader">
+  <div class="big-heart"> ❤️</div>
+  <p class="loader-text">I have a small surprise for you…</p>
+</div>
+
+<!-- Heart Reveal Screen -->
+<div id="heartReveal" class="hidden reveal">
+  <div class="reveal-heart">❤️</div>
+  <img id="hisImage" src="D:\Code\Frontend\For bestoo 1\images\bestoo.jpg" alt="His Photo" class="reveal-image"/>
+  <h2 class="reveal-text">My heart… is full of you.</h2>
+</div>
+
+<div id="heartReveal" class="hidden reveal">
+    <div class="reveal-heart">❤️</div>
+    <img id="hisImage" src="D:\Code\Frontend\For bestoo 1\images\bestoo.jpg" alt="Tharun Photo" class="reveal-image" />
+  
+    <!-- Heart particles container -->
+    <div id="heartsContainer"></div>
+  
+    <h2 class="reveal-text">My heart… is full of you.</h2>
+  </div>
+  
+<!-- Card 1 -->
+<div id="card1" class="hidden card">
+  <img src="D:\Code\Frontend\For bestoo 1\images\anime girl 1.jpg" class="card-heart" alt="heart" />
+  <p class="card-para"><br>
+    Just wanted to tell you as always… Go on muh...Press Continue <br>
+  </p>
+  <button class="btn" id="next1">Continue</button>
+</div>
+
+<!-- Card 2: Typing -->
+<div id="card2" class="hidden card typing-card">
+  <div id="typedText" class="typed-text" aria-live="polite"></div>
+  <button class="btn" id="voiceBtn">Listen to my voice</button>
+</div>
+
+<!-- Card 3: Voice -->
+<div id="card3" class="hidden card">
+  <h3 class="small-lines">Sometimes words aren’t enough…</h3>
+
+  <button class="play-btn" id="audioPlay">▶ Play</button>
+  <audio id="voiceAudio" src="voice.mp3"></audio>
+
+  <p class="short-para">
+   <br><br> This is me… saying what my heart usually whispers.Ketu paaru  <br><br>
+  </p>
+
+  <button class="btn" id="memoriesBtn">View Memories</button>
+</div>
+
+<!-- Card 4: Memories -->
+<div id="card4" class="hidden card slideshow">
+  <h2>Our Beautiful Journey</h2>
+  <div class="memory-wrapper">
+    <button class="slide-btn prev-btn" id="prev">⟨</button>
+    <img id="memoryImg" src="D:\Code\Frontend\For bestoo 1\images\img 1.jpg" class="memory-img" alt="Memory" />
+    <button class="slide-btn next-btn" id="next">⟩</button>
+  </div>
+  <div style="margin-top: 12px; display: flex; justify-content: center; gap: 12px">
+    <button class="btn" id="finishBtn">Finish</button>
+    <button class="btn" id="restartBtn">Restart</button>
+  </div>
+</div>
+
+
+<!-- Final Ending Card -->
+<div id="card5" class="hidden ending-final">
+  <div class="ending-heart">❤️</div>
+  <h1 class="ending-title">Thank you for being in my life</h1><br>
+  <p class="ending-text">
+   <br> You are a blessing I never saw coming…<br />
+    And a feeling I never want to lose. <br>
+  </p>
+  <button class="btn" id="downloadBtn"></button>
+  <button class="btn" id="closeBtn">Back</button>
+
+  <!-- Say Something Button -->
+<button class="btn" id="saySomethingBtn">Say Something</button>
+
+<!-- Modal for typing message -->
+<div id="messageModal" class="hidden">
+  <div class="modal-content">
+    <h3>Type something for me ❤️</h3>
+    <textarea id="userMessage" placeholder="Write your message..." rows="4"></textarea>
+    <button class="btn" id="sendMessageBtn">Send</button>
+  </div>
+</div>
+
+<!-- Ending card message display -->
+<div id="userMessageDisplay" class="user-message-display"></div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
