@@ -312,40 +312,38 @@ sendMessageBtn.addEventListener("click", () => {
     sendMessageBtn.innerText = "Sending...";
   
     fetch("https://sheetdb.io/api/v1/6379f7871chd9", {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          name: "Friend",
-          message: msg
-        })
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        data: [
+          {
+            name: "Friend",
+            message: msg
+          }
+        ]
       })
-      .then(async (response) => {
-        const data = await response.json();
-        console.log(data);
+    })
+    .then(async response => {
+      const data = await response.json();
+      // Check for created or success key
+      if (!data.created && data.error) throw new Error("Failed to create");
   
-        if (data.status !== "success") {
-          throw new Error("Failed to save to sheet");
-        }
-  
-        messageModal.classList.add("hidden");
-        userMessageDisplay.innerText = "Your message has been sent ❤️";
-        userMessage.value = "";
-      })
-      .catch((err) => {
-        console.error(err);
-        messageModal.classList.add("hidden");
-        userMessageDisplay.innerText =
-          "Failed to send message 😔. Please try again later.";
-      })
-      .finally(() => {
-        sendMessageBtn.disabled = false;
-        sendMessageBtn.innerText = "Send";
-      });
+      messageModal.classList.add("hidden");
+      userMessageDisplay.innerText = "Your message has been sent ❤️";
+      userMessage.value = "";
+    })
+    .catch(err => {
+      console.error(err);
+      messageModal.classList.add("hidden");
+      userMessageDisplay.innerText =
+        "Failed to send message 😔. Please try again later.";
+    })
+    .finally(() => {
+      sendMessageBtn.disabled = false;
+      sendMessageBtn.innerText = "Send";
+    });
   });
   
-
 // Show message on ending card (optional if you want to restore after page reload)
 finishBtn.addEventListener("click", () => {
   showCard(card5, card4); // your existing function
