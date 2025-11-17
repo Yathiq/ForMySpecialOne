@@ -72,7 +72,7 @@ downloadBtn.addEventListener("click", ()=>{
 closeBtn.addEventListener("click", ()=> showCard(card4, card5));
 
 // ---------------- MEMORY SLIDESHOW ----------------
-const images = ["img 1.jpg","img 3.jpg","img 2.jpg","img 4.jpg"];
+const images = ["img_1.jpg","img_3.jpg","img_2.jpg","img_4.jpg"];
 let idx = 0;
 
 function updateMemory(){
