@@ -11,8 +11,11 @@
 <!-- PARTICLE BACKGROUND -->
 <canvas id="particleCanvas"></canvas>
 
-<!-- Background music (auto on first click) -->
-<audio id="bgAudio" src="soft-music.mp3" loop preload="auto"></audio>
+<!-- Audio assets (preload light) -->
+<audio id="clickSfx" src="click_sound.wav" preload="auto"></audio>
+<audio id="typeSfx" src="type_bg.mp3" preload="auto"></audio>
+<audio id="heartSfx" src="heartbeat.mp3" preload="auto"></audio>
+<audio id="sendSfx" src="send.wav" preload="auto"></audio>
 
 <!-- Loader Screen -->
 <div id="loader" class="loader">
@@ -21,89 +24,143 @@
 </div>
 
 <!-- Heart Reveal Screen -->
-
 <div id="heartReveal" class="hidden reveal">
-    <div class="reveal-heart">❤️</div>
-    <img id="hisImage" src="bestoo.jpg" alt="Tharun Photo" class="reveal-image" />
-  
-    <!-- Heart particles container -->
-    <div id="heartsContainer"></div>
-  
-    <h2 class="reveal-text">My heart… is full of you.</h2>
+  <div class="reveal-heart">❤️</div>
+  <img id="hisImage" src="bestoo.jpg" alt="Tharun Photo" class="reveal-image" />
+
+  <!-- Heart particles container (DOM-based animated hearts) -->
+  <div id="heartsContainer" aria-hidden="true"></div>
+
+  <h2 class="reveal-text">“Your silence is my peace, your presence my comfort.
+    My heart overflows… with you, only you.
+    Hold my hand and trust me—
+    I’d give up everything—even myself—just to see you smile and happy,
+    Because with you, my life and my world is already complete."</h2>
+</div>
+
+<!-- Center wrapper so cards always center nicely -->
+<main id="appRoot" class="app-root">
+
+  <!-- Card 1 -->
+  <section id="card1" class="hidden card">
+    <img src="anime_girl_1.jpg" class="card-heart" alt="heart" />
+    <p class="card-para"><br>
+      Just wanted to tell you as always… Go on muh...Press Continue <br>
+    </p>
+    <div class="controls-row">
+      <button class="btn" id="next1">Continue</button>
+    </div>
+  </section>
+
+  <!-- Card 2: Typing -->
+  <section id="card2" class="hidden card typing-card">
+    <div id="typedText" class="typed-text" aria-live="polite"></div>
+    <div class="controls-row">
+      <button class="btn" id="voiceBtn">Listen to my voice</button>
+    </div>
+  </section>
+
+  <!-- Card 3: Voice -->
+  <section id="card3" class="hidden card">
+    <h3 class="small-lines">Sometimes words aren’t enough…Heart speaks... <br></h3>
+
+    <div class="voice-row">
+      <button id="audioPlay" class="play-btn">
+        <span class="play-icon">▶ Play</span>
+        <span class="waveform"><span></span><span></span><span></span></span>
+      </button>
+    
+      <button id="audioRestart" class="restart-btn" type="button">⟲</button>
+      <span id="audioTime" class="audio-time">00:00 / 00:00</span>
+      <audio id="voiceAudio" src="my_inner_feelings.mp3"></audio>
+    </div>
+    <div class="audio-progress-container">
+      <div id="audioProgress" class="audio-progress-bar">
+        <div id="audioProgressFill" class="audio-progress-fill"></div>
+      </div>
+    </div>
+    
+    <p class="short-para">
+     <br><br> This is me… saying what my heart usually whispers to me....Heasdet potu keluu pa  <br><br> Romba pesirupen konjam emotional aaiten pesirapa adjust paniko express pananum nu nenachuthu elamey solirupen, soliten dey <br> <br>
+    </p>
+    <br>
+    <div class="controls-row"> 
+      <button class="btn" id="memoriesBtn">View Memories</button>
+    </div>
+  </section>
+
+  <!-- Card 4: Memories (Gallery) -->
+  <section id="card4" class="hidden card slideshow">
+    <h2>Our Beautiful Journey</h2>
+    <div class="memory-wrapper" id="gallery">
+        <img id="memoryImg" class="memory-img" src="img_1.jpg" alt="Memory">
+        <div id="memoryMsg" class="memory-msg">Forever in my heart 💕</div>
+        <button class="slide-btn prev-btn" id="prev">&#10094;</button>
+        <button class="slide-btn next-btn" id="next">&#10095;</button>
+        <div class="dots" id="dots"></div>
+      </div>
+      
+    <div class="gallery-controls">
+      <div id="dots" class="dots"></div>
+    </div>
+
+    <div style="margin-top: 12px; display: flex; justify-content: center; gap: 12px">
+      <button class="btn" id="finishBtn">Finish</button>
+      <button class="btn" id="restartBtn">Restart</button>
+    </div>
+  </section>
+
+  <!-- Final Ending Card -->
+  <section id="card5" class="hidden ending-final card">
+    <div class="ending-heart">❤️</div>
+    <h1 class="ending-title"> <br><br>Thank you for being in my life</h1><br>
+    <p class="ending-text">
+     <br> You are a blessing I never saw coming…<br />
+      And a feeling I never want to lose. <br>
+    </p>
+
+    <div class="ending-controls">
+      <button class="btn" id="closeBtn">Back</button>
+      <button class="btn" id="saySomethingBtn">Say Something</button>
+    </div>
+
+    <!-- Modal for typing message -->
+    <div id="messageModal" class="hidden modal-overlay">
+      <div class="modal-content">
+        <h3>Type something for me ❤️</h3>
+        <textarea id="userMessage" placeholder="Write your message..." rows="4"></textarea>
+        <div class="modal-actions">
+          <button class="btn" id="sendMessageBtn">Send</button>
+          <button class="btn" id="cancelMessageBtn">Cancel</button>
+        </div>
+        <div id="modalLoader" class="modal-loader hidden">Sending…</div>
+      </div>
+    </div>
+
+    <!-- Ending card message display -->
+    <div id="userMessageDisplay" class="user-message-display"></div>
+
+    <!-- Surprise Button -->
+<button id="surpriseBtn" class="btn surprise-btn-small">🎁 Surprise Message</button>
+
+<!-- Hidden Popup -->
+<div id="surprisePopup" class="surprise-popup hidden">
+  <div class="popup-box">
+    <h3>💝 A kutty Message for You  💝</h3>
+    <p>You’re the person my heart chooses every single day… quietly, deeply, endlessly. <br>
+      You are my favourite person in this whole world. 💎🦝 
+      And I’m always yours… forever. 🩵✨ 
+      Love you so much da Tharun'ey deeply and endlessly.... ❤️</p>
+    <button id="closePopup" class="close-popup-btn">Close</button>
   </div>
-  
-<!-- Card 1 -->
-<div id="card1" class="hidden card">
-  <img src="anime_girl_1.jpg" class="card-heart" alt="heart" />
-  <p class="card-para"><br>
-    Just wanted to tell you as always… Go on muh...Press Continue <br>
-  </p>
-  <button class="btn" id="next1">Continue</button>
 </div>
 
-<!-- Card 2: Typing -->
-<div id="card2" class="hidden card typing-card">
-  <div id="typedText" class="typed-text" aria-live="polite"></div>
-  <button class="btn" id="voiceBtn">Listen to my voice</button>
-</div>
+  </section>
 
-<!-- Card 3: Voice -->
-<div id="card3" class="hidden card">
-  <h3 class="small-lines">Sometimes words aren’t enough…</h3>
-
-  <button class="play-btn" id="audioPlay">▶ Play</button>
-  <audio id="voiceAudio" src="voice.mp3"></audio>
-
-  <p class="short-para">
-   <br><br> This is me… saying what my heart usually whispers.Ketu paaru  <br><br>
-  </p>
-
-  <button class="btn" id="memoriesBtn">View Memories</button>
-</div>
-
-<!-- Card 4: Memories -->
-<div id="card4" class="hidden card slideshow">
-  <h2>Our Beautiful Journey</h2>
-  <div class="memory-wrapper">
-    <button class="slide-btn prev-btn" id="prev">⟨</button>
-    <img id="memoryImg" src="img_1.jpg" class="memory-img" alt="Memory" />
-    <button class="slide-btn next-btn" id="next">⟩</button>
-  </div>
-  <div style="margin-top: 12px; display: flex; justify-content: center; gap: 12px">
-    <button class="btn" id="finishBtn">Finish</button>
-    <button class="btn" id="restartBtn">Restart</button>
-  </div>
-</div>
-
-
-<!-- Final Ending Card -->
-<div id="card5" class="hidden ending-final">
-  <div class="ending-heart">❤️</div>
-  <h1 class="ending-title">Thank you for being in my life</h1><br>
-  <p class="ending-text">
-   <br> You are a blessing I never saw coming…<br />
-    And a feeling I never want to lose. <br>
-  </p>
-  <button class="btn" id="downloadBtn"></button>
-  <button class="btn" id="closeBtn">Back</button>
-
-  <!-- Say Something Button -->
-<button class="btn" id="saySomethingBtn">Say Something</button>
-
-<!-- Modal for typing message -->
-<div id="messageModal" class="hidden">
-  <div class="modal-content">
-    <h3>Type something for me ❤️</h3>
-    <textarea id="userMessage" placeholder="Write your message..." rows="4"></textarea>
-    <button class="btn" id="sendMessageBtn">Send</button>
-  </div>
-</div>
-
-<!-- Ending card message display -->
-<div id="userMessageDisplay" class="user-message-display"></div>
-
-</div>
+</main>
 
 <script src="script.js"></script>
 </body>
 </html>
+
+
